@@ -1,0 +1,281 @@
+#![enable(implicit_some)]
+#![enable(unwrap_newtypes)]
+#![enable(unwrap_variant_newtypes)]
+(
+    default_album_art_path: None,
+    show_song_table_header: true,
+    draw_borders: true,
+    format_tag_separator: " | ",
+    browser_column_widths: [20, 38, 42],
+    background_color: "#000000",
+    text_color: "#F6D85C",
+    header_background_color: "#000000",
+    modal_background_color: "#000000",
+    preview_label_style: (fg: "yellow"),
+    preview_metadata_group_style: (fg: "yellow", modifiers: "Bold"),
+    tab_bar: (
+        active_style: (fg: "#311305", bg: "#62612E", modifiers: "Bold"),
+        inactive_style: (),
+    ),
+    current_item_style: (fg: "#F6D85C", bg: "#311305", modifiers: "Bold"),
+    highlighted_item_style: (fg: "#578155", modifiers: "Bold"),
+    borders_style: (fg: "#F6D85C"),
+    highlight_border_style: (fg: "#F6D85C"),
+    symbols: (song: "S", dir: "D", playlist: "P", marker: "M", ellipsis: "..."),
+    progress_bar: (
+        symbols: ["█", "█", "█", "█", "█" ],
+        track_style: (fg: "#311305"),
+        elapsed_style: (fg: "#578155"),
+        thumb_style: (fg: "#578155", bg: "#311305"),
+    ),
+    cava: (
+        bar_width: 2,
+        bar_spacing: 1,
+        orientation: Bottom,
+        bar_color: Gradient({
+              0: "#9C2314",
+             14: "#9C1724",
+             28: "#C36E22",
+             42: "#F6D85C",
+             56: "#578155",
+             70: "#505B5C",
+             84: "#62612E",
+             100: "#311305",
+        }),
+    ),
+    scrollbar: (
+        symbols: ["│", "█", "▲", "▼"],
+        track_style: (),
+        ends_style: (),
+        thumb_style: (fg: "#9C2314"),
+    ),
+    song_table_format: [
+        (
+            prop: (kind: Property(Artist),
+                default: (kind: Text("Unknown"))
+            ),
+            width: "20%",
+        ),
+        (
+            prop: (kind: Property(Title),
+                default: (kind: Text("Unknown"))
+            ),
+            width: "35%",
+        ),
+        (
+            prop: (kind: Property(Album), style: (fg: "white"),
+                default: (kind: Text("Unknown Album"), style: (fg: "white"))
+            ),
+            width: "30%",
+        ),
+        (
+            prop: (kind: Property(Duration),
+                default: (kind: Text("-"))
+            ),
+            width: "15%",
+            alignment: Right,
+        ),
+    ],
+    header: (
+        rows: [
+            (
+                left: [
+                    (kind: Property(Status(StateV2(playing_label: "  ", paused_label: "  ", stopped_label: "  ",
+                        playing_style: (fg: "#578155"), paused_style: (fg: "#505B5C"), stopped_style: (fg: "#9C2314")))), style: (fg: "#578155", modifiers: "Bold")),
+                ],
+                center: [
+                    (kind: Text(""), style: (fg: "#F6D85C", modifiers: "Bold"))
+                ],
+                right: [
+                   (kind: Text(""), style: (fg: "#F6D85C", modifiers: "Bold"))
+                ]
+            ),
+        ],
+    ),
+    browser_song_format: [
+        (
+            kind: Group([
+                (kind: Property(Track)),
+                (kind: Text(" ")),
+            ])
+        ),
+        (
+            kind: Group([
+                (kind: Property(Artist)),
+                (kind: Text(" - ")),
+                (kind: Property(Title)),
+            ]),
+            default: (kind: Property(Filename))
+        ),
+    ],
+    layout: Split(
+    direction: Vertical,
+    panes: [
+        (
+            size: "3",
+            pane: Pane(Tabs),
+        ),
+        (
+            size: "100%",
+            pane: Split(
+                direction: Horizontal,
+                panes: [
+                    (
+                        size: "30%",
+                        pane: Split(
+                            direction: Vertical,
+                            panes: [
+                                (
+                                    size: "100%",
+                                    borders: "ALL",
+                                    pane: Pane(AlbumArt)
+                                ),
+                                (
+                                    size: "8",
+                                    borders: "ALL",
+                                    pane: Split(
+                                        direction: Vertical,
+                                        panes: [
+                                            (
+                                                size: "1",
+                                                pane: Pane(Property(
+                                                    content: [
+                                                        (kind: Property(Song(Title)), style: (fg: "#578155", modifiers: "Bold"),
+                                                        default: (kind: Text("No Song"), style: (modifiers: "Bold"))
+                                                        )
+                                                    ],
+                                                    align: Center
+                                                ))
+                                            ),
+                                            (
+                                                size: "1",
+                                                pane: Pane(Property(
+                                                    content: [
+                                                        (kind: Property(Song(Artist)), style: (fg: "#F6D85C"),
+                                                        default: (kind: Text("Unknown Artist"), style: (fg: "#F6D85C"))
+                                                        )
+                                                    ],
+                                                    align: Center
+                                                ))
+                                            ),
+                                            (
+                                                size: "1",
+                                                pane: Pane(Property(
+                                                    content: [
+                                                        (kind: Property(Song(Album)), style: (fg: "#F6D85C"),
+                                                        default: (kind: Text("Unknown Album"), style: (fg: "#F6D85C"))
+                                                        )
+                                                    ],
+                                                    align: Center
+                                                ))
+                                            ),
+                                            (
+                                                size: "1",
+                                                pane: Pane(Property(
+                                                                content: [
+                                                                    (kind: Text("")),
+                                                                ],
+                                                            align: Left
+                                                            ))
+                                            ),
+                                            (
+                                                size: "1",
+                                                pane: Split(
+                                                    direction: Horizontal,
+                                                    panes: [
+                                                        (
+                                                            size: "12",
+                                                            pane: Pane(Property(
+                                                                content: [
+                                                                    (kind: Text(" (")),
+                                                                    (kind: Property(Status(Bitrate))),
+                                                                    (kind: Text(" kbps)")),
+                                                                ],
+                                                            align: Left
+                                                            ))
+                                                        ),
+                                                        (
+                                                            size: "100%",
+                                                            pane: Pane(Volume(
+                                                                kind: Slider(
+                                                                    symbols: (
+                                                                        start: "♪",
+                                                                        filled: "─",
+                                                                        thumb: "●",
+                                                                        track: "─",
+                                                                        end: "♫",
+                                                                        ),
+                                                                    track_style: (fg: "#311305"),
+                                                                    filled_style: (fg: "#F6D85C"),
+                                                                    thumb_style: (fg: "#578155"),
+                                                                    )
+                                                            ))
+                                                        )
+                                                    ]
+
+                                                )
+                                            ),
+                                            (
+                                                size: "1",
+                                                pane: Pane(Property(
+                                                    content: [
+                                                        (kind: Property(Widget(States(
+                                                            active_style: (fg: "#F6D85C", modifiers: "Bold"),
+                                                            separator_style: (fg: "#F6D85C")))
+                                                            ),
+                                                            style: (fg: "#578155")
+                                                        )
+                                                    ],
+                                                    align: Center
+                                                ))
+                                            ),
+                                        ]
+                                    ),
+                                )
+                            ]
+                        )
+                    ),
+                    (
+                        size: "70%",
+                        borders: "ALL",
+                        border_type: Single,
+                        alignment: Left,
+                        pane: Pane(TabContent)
+                    )
+                ]
+            ),
+        ),
+        (
+            size: "20%",
+            borders: "ALL",
+            pane: Pane(Cava)),
+        (
+            size: "3",
+            borders: "ALL",
+            pane: Split(
+                direction: Horizontal,
+                panes: [
+                    (
+                        size: "5",
+                        pane: Pane(Header)
+                    ),
+                    (
+                        size: "100%",
+                        pane: Pane(ProgressBar)
+                    ),
+                    (
+                        size: "13",
+                        pane: Pane(Property(
+                            content: [
+                                (kind: Property(Status(Elapsed))),
+                                (kind: Text(" / ")),
+                                (kind: Property(Status(Duration)))
+                            ],
+                            align: Center))
+                    )
+                ]
+            ),
+        ),
+    ],
+),
+)
