@@ -2,4 +2,4 @@
 This is built to match the appearance of my [config for kitty terminal and neovim](https://github.com/maxturer/kitty-nvim-conf)
 ![preview of music player](./Screenshot_20260205_114144.png)
 
-TODO: move adaptable colors version to this repo (this version is hard coded to mona lisa theme, but i have another matched to terminal 16-color variables)
+comes with two themes! "tama" is hard-coded to the modified mona lisa kitty theme included in these docs. "nier" is terminal-neutral and more responsive to vertical windows (i use it on my hyprland setup, so it tiles well. it's called that because my whole setup is the color of the nier automata UI, don't worry about it)
