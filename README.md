@@ -27,6 +27,13 @@ brew install mpd cava rmpc
 
 good question
 
+most of these directories and files don't exist automatically! maybe none of them!
+use `mkdir` followed by a space and then the file paths below. for example, i just set this up on a mac and had to create everything: `mkdir ~/.mpd`, `cd ~/.mpd`, `touch mpd.db mpd.log mpd.pid mpdstate` (that one creates the blank files mpd needs), `mkdir ~/.config/rmpc`
+
+you can use that setup on linux, but replace every instance of `~/.mpd` with `~/.config/mpd`
+
+now you can move the proper config files from here
+
 `config.ron`, `nier.ron`, and `tama.ron` should go in `~/.config/rmpc` (if you don't want the colorful "tama" theme, you can skip that .ron file)
 
 `mpd.conf` goes in `~/.config/mpd` on linux and `~/.mpd` on mac
